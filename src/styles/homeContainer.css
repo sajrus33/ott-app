@@ -1,0 +1,15 @@
+.home {
+  overflow: auto;
+  /* overflow-y: auto; */
+  display: flex;
+}
+.preloader {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+.home__img {
+  width: 100%;
+}

@@ -1,0 +1,33 @@
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: 24px;
+  background-color: var(--white);
+  box-shadow: 0px 1px 1px 0px var(--grey-light);
+}
+.header__logo {
+  margin-right: auto;
+}
+.header__logo--img {
+  max-width: 45px;
+  max-height: 42px;
+}
+.header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.header__link {
+  margin-right: 16px;
+}
+
+@media screen and (max-width: 479px) {
+  .header {
+    padding: 12px;
+  }
+  .header__link {
+    margin-right: 8px;
+  }
+}

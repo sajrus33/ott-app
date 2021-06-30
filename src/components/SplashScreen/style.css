@@ -1,0 +1,21 @@
+.splashScreen { 
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: var(--black);
+  border-radius: 8px;
+  border: 2px solid var(--grey);
+  z-index: 2;
+}
+
+.splashScreen__img {
+  height: 100px;
+  width: 200px;
+  margin-top: 30px;
+}

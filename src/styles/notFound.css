@@ -1,0 +1,19 @@
+.notFound {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.notFound__h1 {
+  color: white;
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+@media screen and (max-width: 479px) {
+  .notFound__h1 {
+    font-size: 16px;
+  }
+}

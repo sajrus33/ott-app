@@ -1,0 +1,8 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+  min-width: 320px;
+  background-color: var(--black);
+}

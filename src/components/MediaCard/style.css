@@ -1,0 +1,13 @@
+.mediaCard { 
+  min-width: 320px;
+  max-width: 320px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.mediaCard:hover {
+  border: 1px solid var(--blue-light)
+}
+
+.mediaCard__img {
+  width: 100%;
+}
