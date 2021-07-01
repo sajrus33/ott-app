@@ -42,7 +42,6 @@ const api = {
 		})
 	},
 	login({ data }) {
-		console.log({data})
 		return customAxios(serverUrl)({
 			requestId: 'login',
 			method: 'post',

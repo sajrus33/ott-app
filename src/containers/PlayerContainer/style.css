@@ -5,3 +5,13 @@
   align-items: center;
   justify-content: center;
 }
+
+.player__wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.player__info {
+  color: var(--white);
+  margin-bottom: 20px;
+}

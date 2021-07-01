@@ -1,6 +1,5 @@
 import _get from 'lodash/get'
 import api from '../../../utils/api'
-// import authWrapper from '../../../utils/authWrapper'
 
 // ------------------------------------
 // Constants
@@ -31,7 +30,7 @@ export const loginAction = call => {
 	return async (dispatch, getState) => {
 		try {
 			const { data, onSuccess } = call
-			const resData = _get(await api.login({ data: {...data}, Device: { Name:'whatever', PlatformCode: 'whatever' } }), 'data')
+			const resData = _get(await api.login({ data }), 'data')
 			
 			const userProfile = _get(resData, 'User')
 			const authToken = _get(resData, 'AuthorizationToken.Token')
@@ -111,7 +110,7 @@ export const getMediaPlayInfoAction = call => {
 			const authToken = _get(getState(), 'session.authToken')
 			const userProfile = _get(getState(), 'session.profile')
 
-			const streamType = userProfile.Id ? 'MAIN' : 'TRIAL'
+			const streamType = userProfile.Id < 0 ? 'TRIAL' : 'MAIN'
 
 			const mediaPlayInfo = _get(await api.getMediaPlayInfo({ data: { ...data, streamType }, authToken }), 'data')
 			onSuccess && onSuccess(mediaPlayInfo)

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import CircleLoader from 'react-spinners/CircleLoader'
 import ReactPlayer from 'react-player'
+import Button from '../../components/UI/Buttons/Button'
 import './style.css'
 
 const PlayerContainer = ({ getMediaPlayInfoAction, location }) => {
@@ -45,7 +46,16 @@ const PlayerContainer = ({ getMediaPlayInfoAction, location }) => {
   				<CircleLoader color="var(--blue)" size={32}/>
   			</div> : 
   				<div className="player">
-  					<ReactPlayer controls width="100%" height="100%" url={mediaPlayInfo.ContentUrl}/>
+  					{mediaPlayInfo.ContentUrl ? <ReactPlayer controls width="100%" height="100%" url={mediaPlayInfo.ContentUrl}/>
+						: 
+						<div className="player__wrapper">
+							<p className="player__info">Ten film nie zawiera podglądu</p>
+							<Link to="/home">
+								<Button>Wróc do listy</Button>
+							</Link>
+						</div>
+						
+					}
   				</div>
   			}
   		</>

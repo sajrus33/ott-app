@@ -19,7 +19,7 @@ const HomeContainer = ({ getMediaListsAction }) => {
 				setMediaList2(mediaList2)
 				setPreloading(false)
 			}
-			const onError = ({ mediaList1, mediaList2 }) => {
+			const onError = () => {
 				history.push('/')
 			}
 
@@ -40,14 +40,25 @@ const HomeContainer = ({ getMediaListsAction }) => {
   					<CircleLoader color="var(--blue)" size={32}/>
   				</div> : 
   				<div className="home">
-					{mediaList1.map(media=> 
-						<MediaCard media={media} key={media.Guid}/>
-					)}
-					{mediaList2.map(media=> 
-						<MediaCard media={media} key={media.Guid}/>
-					)}
-  						{/* {mediaList1.map(media => media)} */}
-  						{/* {mediaList2.map(media => media)} */}
+					<h1 className="home__h1">Filmy</h1>
+					<div className="home__wrapper">
+						<div className="home__list">
+							{mediaList1.map(media=> 
+								<MediaCard media={media} key={media.Guid}/>
+							)}
+						</div>
+						{/* Uncomment code below to display two lists because server returns only 5 movies for anonymous user */}
+						{/* <div className="home__list">
+							{mediaList1.map(media=> 
+								<MediaCard media={media} key={media.Guid}/>
+							)}
+						</div> */}
+						<div className="home__list">
+							{mediaList2.map(media=> 
+								<MediaCard media={media} key={media.Guid}/>
+							)}
+						</div>
+					</div>
   				</div>
   			}
   		</>

@@ -1,4 +1,6 @@
 .mediaCard { 
+  position: relative;
+  display: flex;
   min-width: 320px;
   max-width: 320px;
   border: 1px solid transparent;
@@ -10,4 +12,13 @@
 
 .mediaCard__img {
   width: 100%;
+}
+.mediaCard__title{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  white-space: pre-wrap;
+  color: var(--white);
+  font-weight: 600;
+  padding: 10px;
 }
