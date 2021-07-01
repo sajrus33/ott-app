@@ -40,8 +40,8 @@ export const loginAction = call => {
 
 			onSuccess && onSuccess()
 		} catch (e) {
-			console.log({e})
 			const { onError } = call
+			
 			const errMessage = _get(e, 'response.data.Message', 'Connection problem')
 			onError && onError(errMessage)
 		}
@@ -116,6 +116,7 @@ export const getMediaPlayInfoAction = call => {
 			onSuccess && onSuccess(mediaPlayInfo)
 		} catch (e) {
 			const errMessage = _get(e, 'response.data.Message', 'Connection problem')
+
 			const { onError } = call
 			onError && onError(errMessage)
 		}
