@@ -46,15 +46,12 @@ const PlayerContainer = ({ getMediaPlayInfoAction, location }) => {
   				<CircleLoader color="var(--blue)" size={32}/>
   			</div> : 
   				<div className="player">
+					<Link className="player__linkBack" to="/home">
+							Wstecz
+					</Link>
   					{mediaPlayInfo.ContentUrl ? <ReactPlayer controls width="100%" height="100%" url={mediaPlayInfo.ContentUrl}/>
 						: 
-						<div className="player__wrapper">
-							<p className="player__info">Ten film nie zawiera podglądu</p>
-							<Link to="/home">
-								<Button>Wróc do listy</Button>
-							</Link>
-						</div>
-						
+						<p className="player__info">Ten film nie zawiera podglądu</p>
 					}
   				</div>
   			}
