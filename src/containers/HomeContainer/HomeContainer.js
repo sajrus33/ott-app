@@ -47,12 +47,6 @@ const HomeContainer = ({ getMediaListsAction }) => {
 								<MediaCard media={media} key={media.Guid}/>
 							)}
 						</div>
-						{/* Uncomment code below to display two lists because server returns only 5 movies for anonymous user */}
-						{/* <div className="home__list">
-							{mediaList1.map(media=> 
-								<MediaCard media={media} key={media.Guid}/>
-							)}
-						</div> */}
 						<div className="home__list">
 							{mediaList2.map(media=> 
 								<MediaCard media={media} key={media.Guid}/>

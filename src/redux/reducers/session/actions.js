@@ -41,7 +41,7 @@ export const loginAction = call => {
 			onSuccess && onSuccess()
 		} catch (e) {
 			const { onError } = call
-			
+
 			const errMessage = _get(e, 'response.data.Message', 'Connection problem')
 			onError && onError(errMessage)
 		}
@@ -89,8 +89,8 @@ export const getMediaListsAction = call => {
 				PageSize: 15
 			}
 
-			const mediaList1 = _get(await api.getMediaList({ data: { ...data, PageNumber: 1 }, authToken }), 'data.Entities')
-			const mediaList2 = _get(await api.getMediaList({ data: { ...data, PageNumber: 2 }, authToken }), 'data.Entities')
+			const mediaList1 = _get(await api.getMediaList({ data: { ...data, PageNumber: 0 }, authToken }), 'data.Entities')
+			const mediaList2 = _get(await api.getMediaList({ data: { ...data, PageNumber: 1 }, authToken }), 'data.Entities')
       
 			onSuccess && onSuccess({ mediaList1, mediaList2 })
 		} catch (e) {
