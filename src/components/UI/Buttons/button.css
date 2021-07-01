@@ -13,21 +13,11 @@
 .button:hover {
   background-color: var(--blue-light);
 }
-/* .button:disabled {
+.button:disabled {
   background-color: var(--grey);
   cursor: initial;
-} */
-.button--sm {
-  height: 24px;
-  padding: 3px 24px;
 }
-.button--red {
-  background-color: var(--red);
-}
-.button--red:hover {
-  background-color: var(--red-dark);
-}
-.button__bounceLoader {
+.button__loader {
   width: 100%;
   height: 100%;
   position: absolute;

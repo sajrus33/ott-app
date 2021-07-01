@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import PlayerContainer from './PlayerContainer'
-import { getMediaPlayInfo } from '../../redux/reducers/session/actions'
+import { getMediaPlayInfoAction } from '../../redux/reducers/session/actions'
 
 const mapDispatchToProps = {
-	getMediaPlayInfo
+	getMediaPlayInfoAction
 }
 
 export default connect(

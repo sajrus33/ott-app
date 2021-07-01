@@ -5,22 +5,20 @@ import Button from '../../UI/Buttons/Button'
 import '../../../styles/form.css'
 
 const required = value => value ? undefined : ''
-const isEmail = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
-	'Błędny adres e-mail' : undefined
 const passwordLength = value => value && value.length >= 8 ? undefined : 'Hasło jest za kórtkie'
 
-const LoginForm = ({ handleSubmit, pristine, loading, errMessage, valid }) => {
-	return (
+const LoginForm = ({ handleSubmit, pristine, loading, errMessage, valid }) => 
+	(
 		<form className="form" onSubmit={handleSubmit}>
 			<Field
-				name="email"
+				name="Username"
 				component={Input}
-				type="email"
-				placeholder="E-mail"
-				validate={[required, isEmail]}
+				type="text"
+				placeholder="Username"
+				validate={[required]}
 			/>
 			<Field
-				name="password"
+				name="Password"
 				component={Input}
 				type="password"
 				placeholder="Hasło"
@@ -32,7 +30,6 @@ const LoginForm = ({ handleSubmit, pristine, loading, errMessage, valid }) => {
 			{errMessage && <p className="form__error">{errMessage}</p>}
 		</form>
 	)
-}
 
 export default reduxForm({
 	form: 'loginForm'

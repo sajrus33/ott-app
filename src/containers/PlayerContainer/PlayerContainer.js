@@ -1,41 +1,48 @@
-import React, { Component } from 'react'
-import BounceLoader from 'react-spinners/BounceLoader'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import { withRouter } from 'react-router'
+import CircleLoader from 'react-spinners/CircleLoader'
 import ReactPlayer from 'react-player'
 import './style.css'
 
-class PlayerContainer extends Component {
-  state = {
-  	preloading: true,
-  	mediaPlayInfo: {}
-  }
+const PlayerContainer = ({ getMediaPlayInfoAction, location }) => {
+	const [preloading, setPreloading] = useState(true)
+	const [mediaPlayInfo, setMediaPlayInfo] = useState({})
 
-  async componentDidMount(){
-  	const { getMediaPlayInfo } = this.props
+	const history = useHistory()
 
-  	// TODO use withRouter to pass query param in props
-  	const urlArray = window.location.href.split('/')
-  	const mediaId = urlArray[urlArray.length - 1]
-  	console.log({mediaId})
+	useEffect(()=>{
+		const getMediaPlayInfo = async()=> {
+			const urlArray = location.pathname.split('/')
+			const mediaId = urlArray[urlArray.length - 1]
+	
+			const onSuccess = mediaPlayInfo => {
+				setMediaPlayInfo(mediaPlayInfo)
+				setPreloading(false)
+			}
+			const onError = errMessage => {
+				history.push('/')
+			}
 
-  	const call = {
-  		data: {
-  			mediaId: Number(mediaId)
-  		},
-  		onSuccess: mediaPlayInfo => this.setState({ preloading: false, mediaPlayInfo })
-  	}
+			const call = {
+				data: {
+					mediaId: Number(mediaId)
+				},
+				onSuccess,
+				onError
+			}
+	
+			await getMediaPlayInfoAction(call)
+		}
 
-  	await getMediaPlayInfo(call)
-  }
+		getMediaPlayInfo()
+	}, [])
 
-  render() {
-  	const { preloading, mediaPlayInfo } = this.state
-  	console.log({ mediaPlayInfo })
+  	
   	return (
   		<>
   			{preloading ? <div className="preloader">
-  				<BounceLoader color="var(--orange)" size={32}/>
-  				<BounceLoader color="var(--red)" size={32}/>
-  				<BounceLoader color="var(--blue)" size={32}/>
+  				<CircleLoader color="var(--blue)" size={32}/>
   			</div> : 
   				<div className="player">
   					<ReactPlayer controls width="100%" height="100%" url={mediaPlayInfo.ContentUrl}/>
@@ -43,7 +50,6 @@ class PlayerContainer extends Component {
   			}
   		</>
   	)
-  }
 }
 
-export default PlayerContainer
+export default withRouter(PlayerContainer)

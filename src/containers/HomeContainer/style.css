@@ -1,6 +1,5 @@
 .home {
   overflow: auto;
-  /* overflow-y: auto; */
   display: flex;
 }
 .preloader {

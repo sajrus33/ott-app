@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import CircleLoader from 'react-spinners/CircleLoader'
 import MediaCard from '../../components/MediaCard'
-import '../../styles/homeContainer.css'
+import './style.css'
 
 
 const HomeContainer = ({ getMediaListsAction }) => {

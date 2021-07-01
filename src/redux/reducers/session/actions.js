@@ -31,20 +31,19 @@ export const loginAction = call => {
 	return async (dispatch, getState) => {
 		try {
 			const { data, onSuccess } = call
-   
-			const userCredentials = _get(await api.login({ data }), 'data')
-			const { accessToken, refreshToken } = userCredentials
+			const resData = _get(await api.login({ data: {...data}, Device: { Name:'whatever', PlatformCode: 'whatever' } }), 'data')
+			
+			const userProfile = _get(resData, 'User')
+			const authToken = _get(resData, 'AuthorizationToken.Token')
 
-			dispatch(setUserToken({ accessToken }))
-			localStorage.setItem('refreshToken', refreshToken)
-
-			const userProfile = _get(await api.getProfile({ accessToken }), 'data.userProfile')
 			dispatch(setUserProfile(userProfile))
+			dispatch(setUserToken(authToken))
 
 			onSuccess && onSuccess()
 		} catch (e) {
+			console.log({e})
 			const { onError } = call
-			const errMessage = _get(e, 'response.data.message', 'Server Error - make sure that e-mail and password are correct')
+			const errMessage = _get(e, 'response.data.Message', 'Connection problem')
 			onError && onError(errMessage)
 		}
 	}
@@ -55,8 +54,11 @@ export const loginAsGuestAction = call => {
 		try {
 			const { onSuccess } = call
    
-			const authToken = _get(await api.login({ data: {} }), 'data.AuthorizationToken.Token')
+			const resData = _get(await api.login({ data: {} }), 'data')
+			const userProfile = _get(resData, 'User')
+			const authToken = _get(resData, 'AuthorizationToken.Token')
 			
+			dispatch(setUserProfile(userProfile))
 			dispatch(setUserToken(authToken))
 
 			onSuccess && onSuccess()
@@ -70,19 +72,6 @@ export const loginAsGuestAction = call => {
 }
 
 
-export const logoutAction = call => {
-	return async (dispatch, getState) => {
-		try {
-			localStorage.removeItem('refreshToken')
-			dispatch(setUserToken({}))
-			dispatch(setUserProfile({}))
-		} catch (e) {
-			const { onError } = call
-			onError && onError()
-		}
-	}
-}
-
 // ------------------------------------
 // Media
 // ------------------------------------
@@ -92,7 +81,6 @@ export const getMediaListsAction = call => {
 		try {
 			const { onSuccess } = call
 			const authToken = _get(getState(), 'session.authToken')
-			// console.log({ authToken })
 
 			const data = {
 				MediaListId: 2,
@@ -104,7 +92,6 @@ export const getMediaListsAction = call => {
 
 			const mediaList1 = _get(await api.getMediaList({ data: { ...data, PageNumber: 1 }, authToken }), 'data.Entities')
 			const mediaList2 = _get(await api.getMediaList({ data: { ...data, PageNumber: 2 }, authToken }), 'data.Entities')
-			// console.log({ mediaList1, mediaList2 })
       
 			onSuccess && onSuccess({ mediaList1, mediaList2 })
 		} catch (e) {
@@ -116,15 +103,17 @@ export const getMediaListsAction = call => {
 	}
 }
 
-export const getMediaPlayInfo = call => {
+export const getMediaPlayInfoAction = call => {
 	return async (dispatch, getState) => {
 		try {
 			const { onSuccess, data } = call
 
 			const authToken = _get(getState(), 'session.authToken')
+			const userProfile = _get(getState(), 'session.profile')
 
-			const mediaPlayInfo = _get(await api.getMediaPlayInfo({ data: { ...data, streamType: 'TRIAL' }, authToken }), 'data')
-			console.log({mediaPlayInfo})
+			const streamType = userProfile.Id ? 'MAIN' : 'TRIAL'
+
+			const mediaPlayInfo = _get(await api.getMediaPlayInfo({ data: { ...data, streamType }, authToken }), 'data')
 			onSuccess && onSuccess(mediaPlayInfo)
 		} catch (e) {
 			const errMessage = _get(e, 'response.data.Message', 'Connection problem')

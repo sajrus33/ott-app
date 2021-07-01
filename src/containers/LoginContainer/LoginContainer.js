@@ -1,41 +1,41 @@
-import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useHistory, withRouter } from 'react-router-dom'
 import LoginForm from '../../components/Forms/LoginForm'
-import '../../styles/formContainer.css'
+import './style.css'
 
-class LoginContainer extends Component {
-  state = {
-  	loggedIn: false,
-  	loading: false,
-  	errMessage: ''
-  }
+const LoginContainer = ({ loginAction }) =>  {
+	const [loading, setLoading] = useState(false)
+	const [errMessage, setErrMessage] = useState('')
 
-   handleSubmit = async (data) => {
-   	const { loginAction } = this.props
+	const history = useHistory()
 
-   	this.setState({ loading: true })
+	const handleSubmit = async (data) => {
+		setLoading(true)
+
+		const onSuccess = () => {
+			history.push('/home')
+		}
+
+		const onError = errMessage => {
+			setErrMessage(errMessage)
+			setLoading(false)
+		}
 
    	const call = {
    		data,
-   		onSuccess: () => this.setState({ loggedIn: true, loading: false, errMessage: '' }),
-   		onError: errMessage => this.setState({ loading: false, errMessage })
+   		onSuccess,
+   		onError
    	}
 
    	await loginAction(call)
-   }
+	}
 
-   render() {
-   	const { loggedIn, loading, errMessage } = this.state
-   	return ( loggedIn ? (
-   		<Redirect to='/' />
-   	) : (
+   	return  (
    		<div className="formContainer">
    			<h1 className="formContainer__h1">Zaloguj się</h1>
-   			<LoginForm onSubmit={this.handleSubmit} loading={loading} errMessage={errMessage}/>
+   			<LoginForm onSubmit={handleSubmit} loading={loading} errMessage={errMessage}/>
    		</div>
    	)
-   	)
-   }
 }
 
-export default LoginContainer
+export default  withRouter(LoginContainer)
